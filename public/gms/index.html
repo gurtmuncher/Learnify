@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="/css/styles.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games</title>
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>Games</h1>
+        <p id="status">Loading games...</p>
+        <input type="text" id="search" class="search-box" placeholder="Search...">
+    </div>
+    <div id="game-grid" class="game-grid"></div>
+</div>
+<script src="/js/iframe.js"></script>
+<script>
+    const grid = document.getElementById('game-grid');
+    const status = document.getElementById('status');
+    const searchInput = document.getElementById('search');
+
+    async function loadGames() {
+        try {
+            const response = await fetch('/api/games');
+            const games = await response.json();
+
+            if (games.length === 0) {
+                status.textContent = "No games found in /gms folder.";
+                return;
+            }
+
+            status.style.display = 'none';
+            renderGames(games);
+
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                const filtered = games.filter(g => g.name.toLowerCase().includes(term));
+                renderGames(filtered);
+            });
+
+        } catch (err) {
+            status.textContent = "Error loading games backend.";
+            console.error(err);
+        }
+    }
+
+    function renderGames(gameList) {
+        grid.innerHTML = '';
+        gameList.forEach(game => {
+            const card = document.createElement('a');
+            card.className = 'game-card';
+            card.href = game.url;
+
+            card.innerHTML = `
+                <img src="${game.icon || 'https://via.placeholder.com/150'}" alt="${game.name}">
+                <span>${game.name}</span>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    loadGames();
+</script>
+<script src="/js/background.js"></script>
+<script src="/js/settings.js"></script>
+</body>
+</html>
