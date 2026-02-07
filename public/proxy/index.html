@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learnify</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <script src="/scram/scramjet.all.js"></script>
+  <script src="/baremux/index.js"></script>
+</head>
+<body>
+<a onclick="window.location.href='/home/index.html'" class="home-btn">back</a>
+
+<div class="proxy-container">
+  <div class="proxy-header">
+    <h1>Browse</h1>
+  </div>
+
+  <form id="sj-form" class="search-form">
+    <input id="sj-address" type="text" placeholder="Search or enter URL..." autocomplete="off" />
+    <select id="sj-search-engine">
+      <option style="color: black" value="https://www.google.com/search?q=%s">Google</option>
+      <option style="color: black" value="https://duckduckgo.com/?q=%s">DuckDuckGo</option>
+      <option style="color: black" value="https://search.brave.com/search?q=%s">Brave</option>
+      <option style="color: black" value="https://www.bing.com/search?q=%s">Bing</option>
+    </select>
+    <button type="submit">Go</button>
+  </form>
+
+  <div class="quick-links">
+    <button class="quick-link" data-url="https://youtube.com">YouTube</button>
+    <button class="quick-link" data-url="https://reddit.com">Reddit</button>
+    <button class="quick-link" data-url="https://discord.com">Discord</button>
+    <button class="quick-link" data-url="https://github.com">GitHub</button>
+  </div>
+
+  <div class="bookmarks-section">
+    <div class="bookmarks-header">
+      <h2>Bookmarks</h2>
+      <button class="add-bookmark-btn" id="add-bookmark">+ Add New</button>
+    </div>
+    <div class="bookmarks-grid" id="bookmarks-grid"></div>
+  </div>
+
+  <p id="sj-error" class="error-message"></p>
+</div>
+
+<div class="modal" id="bookmark-modal">
+  <div class="modal-content">
+    <h3>Add Bookmark</h3>
+    <input type="text" id="bookmark-name" placeholder="Name" />
+    <input type="text" id="bookmark-url" placeholder="URL (e.g. https://example.com)" />
+    <div class="modal-buttons">
+      <button class="cancel" id="modal-cancel">Cancel</button>
+      <button class="save" id="modal-save">Save</button>
+    </div>
+  </div>
+</div>
+
+<script src="/proxy/register-sw.js"></script>
+<script src="/proxy/search.js"></script>
+<script>
+  const form = document.getElementById("sj-form");
+  const address = document.getElementById("sj-address");
+  const searchEngine = document.getElementById("sj-search-engine");
+  const error = document.getElementById("sj-error");
+  const bookmarksGrid = document.getElementById("bookmarks-grid");
+  const modal = document.getElementById("bookmark-modal");
+  const addBookmarkBtn = document.getElementById("add-bookmark");
+  const modalCancel = document.getElementById("modal-cancel");
+  const modalSave = document.getElementById("modal-save");
+  const bookmarkName = document.getElementById("bookmark-name");
+  const bookmarkUrl = document.getElementById("bookmark-url");
+
+  const { ScramjetController } = $scramjetLoadController();
+  const scramjet = new ScramjetController({
+    files: {
+      wasm: "/scram/scramjet.wasm.wasm",
+      all: "/scram/scramjet.all.js",
+      sync: "/scram/scramjet.sync.js",
+    },
+  });
+  scramjet.init();
+
+  const connection = new BareMux.BareMuxConnection("/baremux/worker.js");
+
+  let bookmarks = JSON.parse(localStorage.getItem("proxy-bookmarks")) || [
+    { name: "Google", url: "https://google.com" },
+    { name: "Twitter", url: "https://x.com" },
+    { name: "Discord", url: "https://discord.com" }
+  ];
+
+  function saveBookmarks() {
+    localStorage.setItem("proxy-bookmarks", JSON.stringify(bookmarks));
+  }
+
+  function renderBookmarks() {
+    bookmarksGrid.innerHTML = "";
+    bookmarks.forEach((b, i) => {
+      const card = document.createElement("div");
+      card.className = "bookmark-card";
+      card.innerHTML = `<div class="title">${b.name}</div><div class="url">${b.url}</div>`;
+      card.addEventListener("click", () => goToUrl(b.url));
+      bookmarksGrid.appendChild(card);
+    });
+  }
+
+  async function goToUrl(url) {
+    try {
+      await registerSW();
+    } catch (err) {
+      error.textContent = "Failed to register service worker: " + err.message;
+      return;
+    }
+
+    let wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";
+
+    if ((await connection.getTransport()) !== "/libcurl/index.mjs") {
+      await connection.setTransport("/libcurl/index.mjs", [{ websocket: wispUrl }]);
+    }
+
+    const frame = scramjet.createFrame();
+    frame.frame.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;border:none;z-index:9999;";
+    document.body.appendChild(frame.frame);
+    frame.go(url);
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const url = search(address.value, searchEngine.value);
+    goToUrl(url);
+  });
+
+  document.querySelectorAll(".quick-link").forEach(btn => {
+    btn.addEventListener("click", () => goToUrl(btn.dataset.url));
+  });
+
+  addBookmarkBtn.addEventListener("click", () => {
+    bookmarkName.value = "";
+    bookmarkUrl.value = "";
+    modal.classList.add("active");
+  });
+
+  modalCancel.addEventListener("click", () => modal.classList.remove("active"));
+
+  modalSave.addEventListener("click", () => {
+    const name = bookmarkName.value.trim();
+    const url = bookmarkUrl.value.trim();
+    if (name && url) {
+      bookmarks.push({ name, url });
+      saveBookmarks();
+      renderBookmarks();
+      modal.classList.remove("active");
+    }
+  });
+
+  renderBookmarks();
+</script>
+<script src="/js/background.js"></script>
+<script src="/js/settings.js"></script>
+</body>
+</html>
