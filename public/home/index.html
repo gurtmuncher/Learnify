@@ -8,17 +8,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<button class="home-btn" onclick="window.location.href='/index.html'">home</button>
-<div class="container">
-  <h1 onclick="window.location.reload()" style="cursor: pointer">Learnify</h1>
+<canvas id="bg"></canvas>
+<button class="home-btn" onclick="window.location.href='/'">home</button>
+<div class="home-container">
+  <div class="home-content">
+    <h1>Learnify</h1>
 
-
-  <div class="nav-grid">
-    <a href="/gms/" class="nav-btn">games</a>
-    <a href="/eags/" class="nav-btn">eaglercraft</a>
-    <a href="/proxy/" class="nav-btn">proxy</a>
+    <div class="nav-grid">
+      <a href="/gms/" class="nav-btn">Games</a>
+      <a href="/eags/" class="nav-btn">Eaglercraft</a>
+      <a href="/proxy/" class="nav-btn">Proxy</a>
+    </div>
   </div>
-  <script src="/js/settings.js"></script>
+</div>
+
+<script src="/js/settings.js"></script>
 <script src="/js/background.js"></script>
 </body>
 </html>

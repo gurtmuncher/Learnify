@@ -676,3 +676,105 @@ h1 {
 .modal-buttons .save:hover {
     background: #2563eb;
 }
+.home-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.home-container .home-content {
+    text-align: center;
+    max-width: 560px;
+}
+
+.home-container h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    cursor: pointer;
+}
+
+.home-container p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 2.5rem;
+}
+
+.home-container .nav-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 500px) {
+    .home-container .nav-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .home-container h1 {
+        font-size: 2.5rem;
+    }
+}
+.subject-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.subject-card {
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    transition: background 0.2s, transform 0.18s;
+}
+
+.subject-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-3px);
+}
+
+.subject-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 1rem;
+    background: rgba(59, 130, 246, 0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #60a5fa;
+}
+
+.subject-card span {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 500px) {
+    .subject-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .subject-card {
+        padding: 1.2rem 0.8rem;
+    }
+
+    .subject-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 1rem;
+    }
+}
