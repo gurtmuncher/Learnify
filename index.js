@@ -6,15 +6,8 @@ import path from "node:path";
 import Fastify from "fastify";
 import fastifyStatic from "@fastify/static";
 
-
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const publicPath = path.join(__dirname, "public");
-
-logging.set_level(logging.NONE);
-Object.assign(wisp.options, {
-    allow_udp_streams: false,
-    dns_servers: ["1.1.1.3", "1.0.0.3"],
-});
 
 const fastify = Fastify({
     serverFactory: (handler) => {
@@ -25,6 +18,27 @@ const fastify = Fastify({
                 handler(req, res);
             })
     },
+});
+
+fastify.register(fastifyStatic, {
+    root: publicPath,
+    prefix: "/",
+});
+
+fastify.get("/subjects", async (req, reply) => {
+    return reply.sendFile("subjects/index.html");
+});
+
+fastify.get("/settings", async (req, reply) => {
+    return reply.sendFile("settings/index.html");
+});
+
+fastify.get("/about", async (req, reply) => {
+    return reply.sendFile("about/index.html");
+});
+
+fastify.get("/home", async (req, reply) => {
+    return reply.sendFile("home/index.html");
 });
 
 fastify.get("/api/games", async (req, reply) => {

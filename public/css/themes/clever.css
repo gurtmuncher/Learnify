@@ -1,0 +1,280 @@
+html,
+body {
+    background: #f7f8fc !important;
+    font-family: 'Source Sans 3', -apple-system, sans-serif !important;
+    color: #2d3748 !important;
+}
+
+#bg,
+canvas {
+    display: none !important;
+}
+
+header {
+    background: #2962ff !important;
+    border-bottom: none !important;
+    backdrop-filter: none !important;
+}
+
+.header-inner {
+    background: transparent !important;
+}
+
+header .logo {
+    color: #fff !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+header .logo::before {
+    content: "C";
+    font-weight: 900;
+    background: #fff;
+    color: #2962ff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-right: 10px;
+    font-size: 1rem;
+}
+
+header nav a {
+    color: rgba(255,255,255,0.9) !important;
+}
+
+header nav a:hover {
+    color: #fff !important;
+}
+
+.container,
+.home-container,
+.proxy-container {
+    background: #f7f8fc !important;
+    min-height: 100vh;
+}
+
+.page-header h1,
+.home-container h1,
+.proxy-header h1,
+h1 {
+    color: #1a202c !important;
+    font-weight: 700 !important;
+}
+
+.page-header p,
+.home-container p,
+.proxy-header p {
+    color: #718096 !important;
+}
+
+.home-content h1 {
+    color: #1a202c !important;
+}
+
+.home-content p {
+    color: #718096 !important;
+}
+
+.nav-btn,
+.nav-grid a,
+.setting-card,
+.game-card,
+.subject-card,
+.about-card,
+.bookmark-card,
+.bookmarks-section {
+    background: #fff !important;
+    border: none !important;
+    backdrop-filter: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+    color: #2d3748 !important;
+}
+
+.nav-btn:hover,
+.nav-grid a:hover,
+.game-card:hover,
+.subject-card:hover,
+.bookmark-card:hover {
+    background: #fff !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important;
+}
+
+.setting-card label {
+    color: #1a202c !important;
+}
+
+.setting-card p {
+    color: #718096 !important;
+}
+
+.setting-card input,
+.setting-card select,
+input[type="text"],
+input[type="file"],
+select {
+    background: #f7f8fc !important;
+    border: 2px solid #e2e8f0 !important;
+    color: #2d3748 !important;
+    border-radius: 8px !important;
+}
+
+.setting-card input:focus,
+input:focus {
+    border-color: #2962ff !important;
+    background: #fff !important;
+}
+
+.setting-card input::placeholder,
+input::placeholder {
+    color: #a0aec0 !important;
+}
+
+.btn,
+button,
+.search-form button,
+.add-bookmark-btn,
+.modal-buttons .save {
+    background: #2962ff !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 8px !important;
+}
+
+.btn:hover,
+button:hover,
+.search-form button:hover {
+    background: #1e4bd8 !important;
+}
+
+.search-box,
+.search-form input,
+.search-form select {
+    background: #fff !important;
+    border: 2px solid #e2e8f0 !important;
+    color: #2d3748 !important;
+}
+
+.search-box::placeholder,
+.search-form input::placeholder {
+    color: #a0aec0 !important;
+}
+
+.search-box:focus,
+.search-form input:focus {
+    background: #fff !important;
+    border-color: #2962ff !important;
+}
+
+.game-card span,
+.subject-card span,
+.bookmark-card .title {
+    color: #2d3748 !important;
+}
+
+.bookmark-card .url {
+    color: #718096 !important;
+}
+
+.subject-icon {
+    background: rgba(41,98,255,0.1) !important;
+    color: #2962ff !important;
+}
+
+.quick-link {
+    background: #fff !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+    color: #2d3748 !important;
+}
+
+.quick-link:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important;
+}
+
+.theme-btn {
+    background: #fff !important;
+    border: 2px solid #e2e8f0 !important;
+    color: #2d3748 !important;
+}
+
+.theme-btn:hover {
+    background: #f7f8fc !important;
+}
+
+.theme-btn.active {
+    border-color: #2962ff !important;
+    background: rgba(41,98,255,0.1) !important;
+    color: #2962ff !important;
+}
+
+.modal,
+.modal.active {
+    background: rgba(0,0,0,0.5) !important;
+    backdrop-filter: none !important;
+}
+
+.modal-content {
+    background: #fff !important;
+    backdrop-filter: none !important;
+    color: #2d3748 !important;
+    border-radius: 12px !important;
+}
+
+.modal-content h3 {
+    color: #1a202c !important;
+}
+
+.modal-content input {
+    background: #f7f8fc !important;
+    border: 2px solid #e2e8f0 !important;
+    color: #2d3748 !important;
+}
+
+.modal-buttons .cancel {
+    background: #f7f8fc !important;
+    color: #2d3748 !important;
+}
+
+.modal-buttons .save {
+    background: #2962ff !important;
+}
+
+.bookmarks-header h2 {
+    color: #1a202c !important;
+}
+
+.game-bar {
+    background: #fff !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.game-bar span {
+    color: #1a202c !important;
+}
+
+.back-btn {
+    background: #f7f8fc !important;
+    color: #2d3748 !important;
+    border: 2px solid #e2e8f0 !important;
+}
+
+.back-btn:hover {
+    background: #edf2f7 !important;
+}
+
+#status {
+    color: #718096 !important;
+}
+
+a {
+    color: #2962ff !important;
+}
+
+.about-card {
+    color: #2d3748 !important;
+}
+
+.about-card a {
+    color: #2962ff !important;
+}

@@ -4,13 +4,12 @@
   <meta charset="UTF-8">
   <title>Learnify</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="/js/theme.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="/css/styles.css" rel="stylesheet">
 </head>
 
 <body>
-
 
 <header>
   <div class="header-inner">
@@ -33,30 +32,92 @@
   <div class="settings-grid">
 
     <div class="setting-card">
-      <label for="page-title">Page Title</label>
-      <input id="page-title" type="text" placeholder="Learnify">
-    </div>
-
-    <div class="setting-card">
-      <label>Favicon</label>
-      <div id="favicon-choices"></div>
-      <input id="favicon-upload" type="file" accept="image/*">
+      <label>Site Theme</label>
+      <p style="font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 12px;">Disguise the entire site as another platform</p>
+      <div id="theme-choices"></div>
     </div>
 
     <div class="setting-card">
       <label for="panic-key">Panic Key</label>
-      <input id="panic-key" type="text" maxlength="1">
+      <input id="panic-key" type="text" maxlength="1" placeholder="e.g. `">
     </div>
 
     <div class="setting-card">
       <label for="panic-url">Panic URL</label>
-      <input id="panic-url" type="text">
+      <input id="panic-url" type="text" placeholder="https://classroom.google.com">
     </div>
 
   </div>
 </div>
+
+<script>
+  const themes = [
+    { id: "default", name: "Learnify", title: "Learnify", favicon: "/favicon.ico" },
+    { id: "classroom", name: "Classroom", title: "Home", favicon: "https://ssl.gstatic.com/classroom/favicon.png" },
+    { id: "clever", name: "Clever", title: "Clever | Portal", favicon: "/favicons/clever.png" },
+    { id: "canvas", name: "Canvas", title: "Dashboard", favicon: "/favicons/canvas.png" },
+    { id: "schoology", name: "Schoology", title: "Home | Schoology", favicon: "/favicons/schoology.png" }
+  ];
+
+  const themeContainer = document.getElementById("theme-choices");
+
+  function applyTheme(theme) {
+    localStorage.setItem("site-theme", theme.id);
+    window.location.reload();
+  }
+
+  function renderThemeChoices() {
+    const current = localStorage.getItem("site-theme") || "default";
+    themeContainer.innerHTML = "";
+
+    themes.forEach(theme => {
+      const btn = document.createElement("button");
+      btn.textContent = theme.name;
+      btn.className = "theme-btn" + (current === theme.id ? " active" : "");
+      btn.onclick = () => applyTheme(theme);
+      themeContainer.appendChild(btn);
+    });
+  }
+
+  renderThemeChoices();
+</script>
+
 <script src="/js/settings.js"></script>
 <script src="/js/background.js"></script>
+
+<style>
+  #theme-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .theme-btn {
+    display: block;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: none;
+    background: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.8);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-family: inherit;
+    font-weight: 500;
+    text-align: left;
+    transition: all 0.2s;
+  }
+
+  .theme-btn:hover {
+    background: rgba(255,255,255,0.08);
+  }
+
+  .theme-btn.active {
+    border-color: #3b82f6;
+    background: rgba(59,130,246,0.15);
+    color: #fff;
+  }
+</style>
 
 </body>
 </html>
